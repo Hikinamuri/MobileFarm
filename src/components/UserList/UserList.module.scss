@@ -1,0 +1,393 @@
+.userList {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 1px solid white;
+}
+
+.userList ul {
+    width: 100%;
+    max-height: 500px;
+    overflow-y: scroll;
+    margin-top: 0.5em;
+    padding-inline: 0.5em;
+}
+
+.userList ul::-webkit-scrollbar {
+    display: none;
+}
+
+.wall_li {
+    display: flex;
+    white-space: pre;
+    margin-inline: 10px;
+}
+
+.wall_li div {
+    display: flex;
+    align-items: center;
+}
+
+.wall_li label {
+    display: inline-block;
+    max-width: 250px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.wall_li p {
+    padding-right: 0.5em;
+    margin: 0;
+}
+.userList_buttons {
+    display: flex;
+    gap: 10px;
+    padding: 0.5em;
+    margin: auto 0 0 auto;
+}
+
+.userList_buttons button {
+    width: 150px;
+    font-size: 0.75em;
+    white-space: pre;
+}
+
+.userStatsContainer {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    padding: 12px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    transition: all 0.3s ease;
+
+    &:hover {
+        border-color: rgba(255, 255, 255, 0.2);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    }
+}
+
+.sectionTitle {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 20px;
+    color: #ffffff;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.statsGrid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin-bottom: 24px;
+}
+
+.statCard {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 16px;
+    transition: all 0.3s ease;
+
+    &:hover {
+        background: rgba(255, 255, 255, 0.08);
+        border-color: rgba(255, 255, 255, 0.2);
+        transform: translateY(-2px);
+    }
+}
+
+.statHeader {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+
+.statIcon {
+    width: 16px;
+    height: 16px;
+}
+
+.statLabel {
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.statValue {
+    font-size: 20px;
+    font-weight: 700;
+    color: #ffffff;
+}
+
+// Цвета для иконок
+.textPrimary {
+    color: #667eea;
+}
+
+.textAccent {
+    color: #10b981;
+}
+
+.textRose {
+    color: #f43f5e;
+}
+
+// Заголовок списка пользователей
+.usersHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.usersTitle {
+    font-size: 14px;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.postsLabel {
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+// Область прокрутки
+.usersScrollArea {
+    flex: 1;
+    overflow-y: auto;
+    margin: 0 -8px;
+    padding: 0 8px;
+
+    &::-webkit-scrollbar {
+        width: 4px;
+    }
+
+    &::-webkit-scrollbar-track {
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 2px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background: rgba(255, 255, 255, 0.2);
+        border-radius: 2px;
+    }
+}
+
+.usersList {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+// Карточка пользователя
+.userCard {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 16px;
+    transition: all 0.3s ease;
+
+    &:hover {
+        background: rgba(255, 255, 255, 0.08);
+        border-color: rgba(255, 255, 255, 0.2);
+        transform: translateX(4px);
+    }
+}
+
+.userInfo {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+}
+
+.userAvatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 14px;
+    font-weight: 600;
+    flex-shrink: 0;
+
+    // Цвета для аватаров
+    &.bg-blue-500 {
+        background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+    }
+    
+    &.bg-purple-500 {
+        background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+    }
+    
+    &.bg-green-500 {
+        background: linear-gradient(135deg, #10b981, #059669);
+    }
+    
+    &.bg-pink-500 {
+        background: linear-gradient(135deg, #ec4899, #db2777);
+    }
+    
+    &.bg-orange-500 {
+        background: linear-gradient(135deg, #f97316, #ea580c);
+    }
+    
+    &.bg-cyan-500 {
+        background: linear-gradient(135deg, #06b6d4, #0891b2);
+    }
+    
+    &.bg-indigo-500 {
+        background: linear-gradient(135deg, #6366f1, #4f46e5);
+    }
+    
+    &.bg-rose-500 {
+        background: linear-gradient(135deg, #f43f5e, #e11d48);
+    }
+    
+    &.bg-teal-500 {
+        background: linear-gradient(135deg, #14b8a6, #0d9488);
+    }
+    
+    &.bg-amber-500 {
+        background: linear-gradient(135deg, #f59e0b, #d97706);
+    }
+    
+    &.bg-violet-500 {
+        background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+    }
+    
+    &.bg-emerald-500 {
+        background: linear-gradient(135deg, #10b981, #059669);
+    }
+}
+
+.userDetails {
+    flex: 1;
+    min-width: 0;
+}
+
+.userHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
+}
+
+.userName {
+    font-size: 14px;
+    font-weight: 500;
+    color: #ffffff;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.userPosts {
+    font-size: 14px;
+    font-weight: 600;
+    color: #667eea;
+}
+
+.userMeta {
+    margin-top: 4px;
+}
+
+.userEngagement {
+    .progressContainer {
+        height: 6px;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 3px;
+        overflow: hidden;
+        margin-bottom: 4px;
+    }
+
+    .progressBar {
+        height: 100%;
+        background: linear-gradient(90deg, #667eea, #764ba2);
+        border-radius: 3px;
+        transition: width 0.3s ease;
+    }
+
+    .engagementInfo {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .engagementLabel {
+        font-size: 11px;
+        color: rgba(255, 255, 255, 0.5);
+    }
+
+    .engagementValue {
+        font-size: 11px;
+        font-weight: 600;
+        color: #10b981;
+    }
+}
+
+// Кнопка добавления аккаунта
+.addAccountButton {
+    margin-top: 20px;
+    width: 100%;
+    padding: 14px 20px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+
+    &:hover {
+        background: rgba(255, 255, 255, 0.1);
+        border-color: #667eea;
+        box-shadow: 0 4px 12px rgba(102, 126, 234, 0.2);
+    }
+}
+
+.buttonIcon {
+    width: 16px;
+    height: 16px;
+}
+
+// Адаптивность
+@media (max-width: 1024px) {
+    .statsGrid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .statsGrid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .userStatsContainer {
+        padding: 20px;
+    }
+
+    .userCard {
+        padding: 12px;
+    }
+}
+
+@media (max-width: 640px) {
+    .statsGrid {
+        grid-template-columns: 1fr;
+    }
+}
