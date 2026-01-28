@@ -16,7 +16,7 @@ class AuthAPI {
             }).toString();
 
             const response = await axios.post(
-                `${baseUrl}/vk/users/callback?${queryParams}`,
+                `${baseUrl}/users/callback?${queryParams}`,
                 {},
                 {
                     headers: {

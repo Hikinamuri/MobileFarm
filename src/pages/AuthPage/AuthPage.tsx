@@ -26,11 +26,12 @@ export const AuthPage = () => {
         floatingOneTap.on(
             VKID.FloatingOneTapInternalEvents.LOGIN_SUCCESS,
             (
-                code_verifier: string,
-                payload: { code: string; device_id: string; state: string },
+                code_verifier: object,
+                // payload: { code: string; device_id: string; state: string },
             ) => {
-                sessionStorage.setItem("vk_code_verifier", code_verifier);
-                AuthAPI.sendAuthParams(code_verifier, payload);
+                console.log("Code verifier:", code_verifier);
+                // sessionStorage.setItem("vk_code_verifier", code_verifier);
+                // AuthAPI.sendAuthParams(code_verifier, payload);
             },
         );
 
