@@ -25,6 +25,8 @@ class AuthAPI {
                 }
             );
 
+            console.log('response', response)
+
             if (response && response.status === 200) {
                 if (response.data.access) {
                     localStorage.setItem(
