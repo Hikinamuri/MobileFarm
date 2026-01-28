@@ -17,10 +17,9 @@ class AuthAPI {
 
             const response = await axios.post(
                 `${baseUrl}/users/callback?${queryParams}`,
-                {},
+                null,
                 {
                     headers: {
-                        "Content-Type": "application/json",
                     },
                 }
             );
