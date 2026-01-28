@@ -29,6 +29,7 @@ export const AuthPage = () => {
                 code_verifier: string,
                 payload: { code: string; device_id: string; state: string },
             ) => {
+                sessionStorage.setItem("vk_code_verifier", code_verifier);
                 AuthAPI.sendAuthParams(code_verifier, payload);
             },
         );
