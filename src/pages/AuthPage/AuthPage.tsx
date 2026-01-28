@@ -4,7 +4,7 @@ import * as VKID from "@vkid/sdk";
 
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
-// import AuthAPI from "../../api/AuthAPI";
+import AuthAPI from "../../api/AuthAPI";
 
 export const AuthPage = () => {
     const navigate = useNavigate();
@@ -26,12 +26,9 @@ export const AuthPage = () => {
         floatingOneTap.on(
             VKID.FloatingOneTapInternalEvents.LOGIN_SUCCESS,
             (
-                code_verifier: object,
-                // payload: { code: string; device_id: string; state: string },
+                payload: { code: string; device_id: string; state: string },
             ) => {
-                console.log("Code verifier:", code_verifier);
-                // sessionStorage.setItem("vk_code_verifier", code_verifier);
-                // AuthAPI.sendAuthParams(code_verifier, payload);
+                AuthAPI.sendAuthParams('aboba', payload);
             },
         );
 

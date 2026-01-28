@@ -20,13 +20,7 @@ export const AuthParams = () => {
                 return;
             }
             
-            const code_verifier = sessionStorage.getItem("vk_code_verifier");
-            
-            if (!code_verifier) {
-                console.error("Code verifier не найден");
-                navigate("/auth");
-                return;
-            }
+            const code_verifier = 'aboba'
             
             // Формируем payload
             const payload = {
@@ -34,7 +28,7 @@ export const AuthParams = () => {
                 state,
                 device_id: device_id || ""
             };
-            
+            console.log('payload', payload)
             await AuthAPI.sendAuthParams(code_verifier, payload);
             console.log("Параметры успешно отправлены!");
             
