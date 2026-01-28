@@ -6,7 +6,7 @@ const baseUrl = import.meta.env.VITE_BASE_URL;
 class AuthAPI {
     public static sendAuthParams = async (
         code_verifier: string,
-        authParams: { code: string; device_id: string; state: string }
+        authParams: { code: string; device_id: string; state: string },
     ) => {
         try {
             // Исправляем формирование query параметров
@@ -15,38 +15,44 @@ class AuthAPI {
                 code_verifier: code_verifier,
             }).toString();
 
-            console.log('withCredentials default:', axios.defaults.withCredentials);
-            
+            console.log(
+                "withCredentials default:",
+                axios.defaults.withCredentials,
+            );
+
             const response = await axios.post(
                 `${baseUrl}/users/callback?${queryParams}`,
                 null,
                 {
                     withCredentials: false,
-                }
+                },
             );
 
-            console.log('response', response.data)
-
             if (response && response.status === 200) {
-                if (response.data.access) {
-                    localStorage.setItem(
-                        "access_token",
-                        response.data.message || response.data.access
-                    );
-                    window.location.href = "/main";
-                } else {
-                    alert("Аккаунт успешно добавлен.");
-                    window.location.href = "/auth";
-                }
-                return response.data;
+                console.log("response", response.data);
+                localStorage.setItem("access_token", response.data.message);
+                window.location.href = "/main";
             }
+
+
+
+            // if (response && response.status === 200) {
+            //     if (response.data.access) {
+            //         localStorage.setItem(
+            //             "access_token",
+            //             response.data.message || response.data.access,
+            //         );
+            //     } else {
+            //         // alert("Аккаунт успешно добавлен.");
+            //         window.location.href = "/auth";
+            //     }
+            //     return response.data;
+            // }
         } catch (err) {
             const error = err as AxiosError;
             console.error("Auth error:", error.response?.data || error.message);
             alert(
-                `Ошибка авторизации: ${
-                    error.response?.data || error.message
-                }`
+                `Ошибка авторизации: ${error.response?.data || error.message}`,
             );
             throw error;
         }
@@ -74,7 +80,7 @@ class AuthAPI {
             const error = err as AxiosError;
             console.error(
                 "Get users error:",
-                error.response?.data || error.message
+                error.response?.data || error.message,
             );
 
             if (error.response?.status === 401) {
