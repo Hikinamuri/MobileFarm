@@ -19,12 +19,11 @@ class AuthAPI {
                 `${baseUrl}/users/callback?${queryParams}`,
                 null,
                 {
-                    headers: {
-                    },
+                    withCredentials: false,
                 }
             );
 
-            console.log('response', response)
+            console.log('response', response.data)
 
             if (response && response.status === 200) {
                 if (response.data.access) {
