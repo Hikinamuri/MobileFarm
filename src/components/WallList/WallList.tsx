@@ -92,7 +92,7 @@ export const WallList = ({
             }));
 
             setWallList(updatedWalls);
-            setSelectedWalls(updatedWalls.filter((w) => w.isSelected));
+            setSelectedWalls(updatedWalls.filter((w: Wall) => w.isSelected));
             // setWalls(updatedWalls.filter((w) => w.isSelected));
 
             // Закрываем модалку после успешной загрузки

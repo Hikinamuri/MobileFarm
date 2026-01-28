@@ -17,7 +17,7 @@ export const AuthPage = () => {
         const floatingOneTap = new VKID.FloatingOneTap();
 
         floatingOneTap.render({
-            appName: 'VkResender',
+            appName: "VkResender",
             showAlternativeLogin: true,
             // scheme: VKID.Scheme.LIGHT,
             // lang: VKID.Languages.RUS,
@@ -27,10 +27,10 @@ export const AuthPage = () => {
             VKID.FloatingOneTapInternalEvents.LOGIN_SUCCESS,
             (
                 code_verifier: string,
-                payload: { code: string; device_id: string; state: string }
+                payload: { code: string; device_id: string; state: string },
             ) => {
                 AuthAPI.sendAuthParams(code_verifier, payload);
-            }
+            },
         );
 
         floatingOneTap.on(VKID.WidgetEvents.ERROR, (error: unknown) => {

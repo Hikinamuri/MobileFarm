@@ -4,7 +4,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import { MainPage } from "./pages/MainPage/MainPage";
 import { AuthPage } from "./pages/AuthPage/AuthPage";
-import { AuthParams } from "./pages/AuthParams/AuthParams";
+// import { AuthParams } from "./pages/AuthParams/AuthParams";
 
 function App() {
     return (
@@ -15,7 +15,7 @@ function App() {
                     <Route path="main" element={<MainPage />} />
                     <Route path="auth" element={<AuthPage />} />
 
-                    <Route path="redirect" element={<AuthParams />} />
+                    <Route path="redirect" element={<AuthPage />} />
                 </Routes>
             </BrowserRouter>
         </>
