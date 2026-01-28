@@ -15,6 +15,8 @@ class AuthAPI {
                 code_verifier: code_verifier,
             }).toString();
 
+            console.log('withCredentials default:', axios.defaults.withCredentials);
+            
             const response = await axios.post(
                 `${baseUrl}/users/callback?${queryParams}`,
                 null,
