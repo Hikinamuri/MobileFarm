@@ -4,7 +4,7 @@ import * as VKID from "@vkid/sdk";
 
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
-import AuthAPI from "../../api/AuthAPI";
+// import AuthAPI from "../../api/AuthAPI";
 
 export const AuthPage = () => {
     const navigate = useNavigate();
