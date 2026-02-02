@@ -18,7 +18,7 @@ class WallsAPI {
         const token = localStorage.getItem("access_token");
 
         const formData = new FormData();
-        const wallsQuery = walls.map((w) => `group_ids=-${w.id}`).join("&-");
+        const wallsQuery = walls.map((w) => `group_ids=-${w.id}`).join("&");
         const queryParams = `${wallsQuery}`;
 
         messages.forEach((message) => {

@@ -26,7 +26,6 @@ class AuthAPI {
             );
 
             console.log('response', response.data)
-            
 
             if (response && response.status === 200) {
                 if (response.data.access) {
