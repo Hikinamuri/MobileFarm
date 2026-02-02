@@ -39,7 +39,7 @@ class WallsAPI {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },
-                    timeout: 600000,
+                    timeout: 1800000,
                 }
             );
 
