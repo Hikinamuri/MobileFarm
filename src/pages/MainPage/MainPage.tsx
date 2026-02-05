@@ -109,6 +109,16 @@ export const MainPage = () => {
 
             const groupIds = selectedWalls.map((w) => w.id * -1);
 
+            const initialProgress = {
+                total: groupIds.length,
+                current: 0,
+                last_update: Date.now(),
+            };
+            localStorage.setItem(
+                "vk_wall_post_progress",
+                JSON.stringify(initialProgress),
+            );
+
             setProgress({
                 total: groupIds.length,
                 current: 0,
@@ -134,17 +144,75 @@ export const MainPage = () => {
     useEffect(() => {
         const socket = new VkPostSocket();
 
+        const savedProgressRaw = localStorage.getItem("vk_wall_post_progress");
+        if (savedProgressRaw) {
+            try {
+                const saved = JSON.parse(savedProgressRaw);
+                if (saved.operation_id && saved.total !== undefined) {
+                    setProgress((prev) => ({
+                        ...prev,
+                        total: saved.total,
+                        current: saved.current,
+                        isActive: saved.current < saved.total,
+                    }));
+                }
+            } catch {
+                console.log("Failed to parse saved progress");
+            }
+        }
+
+        const savedResults = localStorage.getItem("vk_wall_post_results");
+        if (savedResults) {
+            try {
+                const links = JSON.parse(savedResults);
+                if (Array.isArray(links)) {
+                    setResults(links);
+                }
+            } catch {
+                console.log("Failed to parse saved results");
+            }
+        }
+
         socket.connect((data: ServerEvent) => {
             console.log("WS event:", data);
+
+            if ("progress" in data && data.operation_id) {
+                const progressData = {
+                    operation_id: data.operation_id,
+                    total: data.progress.total,
+                    current: data.progress.current,
+                    last_update: Date.now(),
+                };
+                localStorage.setItem(
+                    "vk_wall_post_progress",
+                    JSON.stringify(progressData),
+                );
+            }
 
             if (data.command === "status") {
                 setProgress((prev) => ({
                     ...prev,
-                    current: data.progress?.current || prev.current + 1,
+                    current: data.progress.current,
                     total: data.progress?.total || prev.total,
                     successful: prev.successful + 1,
                 }));
-                setResults((prev) => [...prev, data.link]);
+                setResults((prev) => {
+                    const newLink = data.link;
+                    if (prev.includes(newLink)) {
+                        console.warn("Duplicate link prevented:", newLink);
+                        return prev;
+                    }
+                    const newResults = [...prev, newLink];
+                    localStorage.setItem(
+                        "vk_wall_post_results",
+                        JSON.stringify(newResults),
+                    );
+                    return newResults;
+                });
+
+                if (data.progress.current >= data.progress.total) {
+                    localStorage.removeItem("vk_wall_post_progress");
+                }
             }
 
             if (data.command === "error") {
@@ -153,7 +221,7 @@ export const MainPage = () => {
 
                 setProgress((prev) => ({
                     ...prev,
-                    current: data.progress?.current || prev.current + 1,
+                    current: data.progress.current,
                     total: data.progress?.total || prev.total,
                     failed: prev.failed + 1,
                 }));
@@ -164,6 +232,10 @@ export const MainPage = () => {
                     const newErrors = [errorMessage, ...prev].slice(0, 5); // Храним только последние 5 ошибок
                     return newErrors;
                 });
+
+                if (data.progress.current >= data.progress.total) {
+                    localStorage.removeItem("vk_wall_post_progress");
+                }
             }
         });
 
@@ -182,7 +254,6 @@ export const MainPage = () => {
                 const blob = new Blob([results.join("\n")], {
                     type: "text/plain",
                 });
-
                 const link = URL.createObjectURL(blob);
                 setDownloadLink(link);
             }
@@ -191,7 +262,8 @@ export const MainPage = () => {
                 ...prev,
                 isActive: false,
             }));
-            setResults([]);
+            // setResults([]);
+            // localStorage.removeItem("vk_wall_post_results");
         }
     }, [progress.total, progress.isActive, progress, recentErrors, results]);
 
@@ -434,6 +506,15 @@ export const MainPage = () => {
                                             href={downloadLink}
                                             download="result.txt"
                                             className={cl.downloadLink}
+                                            onClick={() => {
+                                                setTimeout(() => {
+                                                    localStorage.removeItem(
+                                                        "vk_wall_post_results",
+                                                    );
+                                                    setResults([]);
+                                                    setDownloadLink(null);
+                                                }, 500);
+                                            }}
                                         >
                                             <button
                                                 className={cl.secondaryButton}
