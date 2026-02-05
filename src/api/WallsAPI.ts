@@ -10,16 +10,40 @@ export interface Collection {
 }
 
 class WallsAPI {
+    public static startWallPost = async (
+        messages: string[],
+        walls: Wall[],
+        images?: File[],
+    ) => {
+        const token = localStorage.getItem("access_token");
+        const formData = new FormData();
+
+        formData.append("group_ids", walls.map((w) => `-${w.id}`).join(","));
+        messages.forEach((m) => formData.append("messages", m));
+        images?.forEach((img) => formData.append("images", img));
+
+        const res = await axios.post(
+            `${baseUrl}/vk/wall.post/start`,
+            formData,
+            {
+                headers: { Authorization: `Bearer ${token}` },
+            },
+        );
+
+        return res.data.job_id;
+    };
+
     public static sendWallPost = async (
         messages: string[],
         walls: Wall[],
-        images?: File[]
+        images?: File[],
     ) => {
         const token = localStorage.getItem("access_token");
 
         const formData = new FormData();
-        const wallsQuery = walls.map((w) => `group_ids=-${w.id}`).join("&");
-        const queryParams = `${wallsQuery}`;
+
+        const groupIdsString = walls.map((wall) => wall.id).join(",");
+        formData.append("group_ids", groupIdsString);
 
         messages.forEach((message) => {
             formData.append("messages", message);
@@ -33,14 +57,14 @@ class WallsAPI {
 
         try {
             const response = await axios.post(
-                `${baseUrl}/vk/wall.post?${queryParams}`,
+                `${baseUrl}/vk/wall.post`,
                 formData,
                 {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },
                     timeout: 1800000,
-                }
+                },
             );
 
             if (response && response.status === 200) {
@@ -69,7 +93,7 @@ class WallsAPI {
                         Authorization: `Bearer ${token}`,
                         "Content-Type": "application/json",
                     },
-                }
+                },
             );
 
             if (response && response.status == 200) {
@@ -105,7 +129,7 @@ class WallsAPI {
         try {
             const response = await axios.post(
                 `${baseUrl}/vk/create_collection?name=${encodeURIComponent(
-                    name
+                    name,
                 )}`,
                 {},
                 {
@@ -113,7 +137,7 @@ class WallsAPI {
                         Authorization: `Bearer ${token}`,
                         "Content-Type": "application/json",
                     },
-                }
+                },
             );
 
             if (response && response.status === 200) {
@@ -147,7 +171,7 @@ class WallsAPI {
 
     public static addGroupsToCollection = async (
         collectionId: number,
-        groupIds: number[]
+        groupIds: number[],
     ) => {
         const token = localStorage.getItem("access_token");
 
@@ -166,7 +190,7 @@ class WallsAPI {
                         Authorization: `Bearer ${token}`,
                         "Content-Type": "application/json",
                     },
-                }
+                },
             );
 
             if (response && response.status === 200) {
@@ -189,7 +213,7 @@ class WallsAPI {
                         Authorization: `Bearer ${token}`,
                         "Content-Type": "application/json",
                     },
-                }
+                },
             );
 
             if (response && response.status === 200) {
